@@ -1,0 +1,15 @@
+### List all text messages
+
+GET http://localhost:3000/example
+
+### Create a new text message
+POST http://localhost:3000/example
+Content-Type: application/json
+
+{
+  "text": "Hello World"
+}
+
+### Get a particular text message
+GET http://localhost:3000/example/1
+
