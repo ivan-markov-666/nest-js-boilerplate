@@ -58,4 +58,5 @@ bootstrap();
 // This command will execute the main.ts file. The 'npx' command will execute the ts-node-dev package. The ts-node-dev package will execute the main.ts file.
 // The console will show the following message:
 // > Nest application successfully started
+// Open the browser and visit the following URL: "localhost:3000". You will see the following message: "Hello World!".
 // If there are errors, we must double-check if another application does not use port 3000.
