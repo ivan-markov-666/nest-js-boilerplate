@@ -1,8 +1,3 @@
-/**
- * This is the first file executed in any NestJS project.
- * In this example, we will create modules and controllers here.
- * In the following example, we will split the modules and controllers into separate files.
- */
 // Import NestFactory from nestjs/core.
 import { NestFactory } from "@nestjs/core";
 // Import the AppModule class from the app.module.ts file.
@@ -17,10 +12,3 @@ async function bootstrap() {
 }
 // Call the bootstrap function.
 bootstrap();
-
-// Summary:
-// We moved some code from that file to the app.module.ts and app.controller.ts files.
-// We imported the AppModule class from the app.module.ts file.
-// Restart the application by using the following command:
-// > npx ts-node-dev src/main.ts
-// Open the browser and visit the following URL: "localhost:3000". You will see the following message: "Hello World!".

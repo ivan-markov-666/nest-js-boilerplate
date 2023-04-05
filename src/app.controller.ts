@@ -2,15 +2,28 @@
 import { Controller, Get } from "@nestjs/common";
 
 // Create Controller.
-// Call the Controller() decorator. That means we are creating a new controller, and the AppController class will serve as a controller inside the application.
-@Controller()
+// Provide '/app' as a prefix for all the routes inside this controller.
+@Controller("/app")
 // Create and export a new class called AppController.
 export class AppController {
-  // Call the Get() decorator. That means we are creating a new route handler, and the getRootRoute() method will serve as a route handler inside the application.
-  @Get()
-  // Handle a GET request to the root route of the application.
+  // Create a new Get request handler.
+  // Provide '/routeExample' as a route for this request handler.
+  @Get("/routeExample")
+  // Handle a GET request to the application's '/routeExample' route.
   getRootRoute() {
-    // Return a string. This message will be shown when we visit the root route of the application.
-    return "Hello World!";
+    // Return a string. This message will be shown when we visit the application's '/routeExample' route.
+    return "Hello Route!";
   }
 }
+
+// Summary:
+// We imported the Controller() decorator and the Get() decorator from the @nestjs/common package.
+// We created a new class called AppController.
+// We provided '/app' as a prefix for all the routes inside this controller.
+// We created a new Get request handler.
+// We provided '/routeExample' as a route for this request handler.
+// We handled a GET request to the application's '/routeExample' route.
+// We returned a string. This message will be shown when we visit the application's '/routeExample' route.
+
+// Open the browser and visit http://localhost:3000/app/routeExample. You should see the message "Hello Route!".
+
