@@ -1,8 +1,7 @@
 ### List all text messages
-
 GET http://localhost:3000/example
 
-### Create a new text message
+### Create a new text message using String
 POST http://localhost:3000/example
 Content-Type: application/json
 
@@ -10,6 +9,17 @@ Content-Type: application/json
   "text": "Hello World"
 }
 
-### Get a particular text message
+### Create a new text message using number
+POST http://localhost:3000/example
+Content-Type: application/json
+
+{
+  "text": 1234
+}
+
+### Get a particular text message 1
 GET http://localhost:3000/example/1
+### Get a particular text message 2
+GET http://localhost:3000/example/324234234234
+
 

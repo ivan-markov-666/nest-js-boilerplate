@@ -1,20 +1,21 @@
-// Imported the Get and Post decorators from the @nestjs/common package.
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+// Import DTO class that we created.
+import { CreteExampleDto } from './dtos/create-example.dto';
 
 @Controller('example')
 export class ExampleController {
-  // Added the Get decorator to the listText() method.
   @Get()
-  // Created the listText() method.
   listText() {}
 
-  // Added the Post decorator to the createText() method.
   @Post()
-  // Created the createText() method.
-  createText() {}
+  // Change the body: any to body: CreteExampleDto.
+  // That way, Nest will automatically validate the request body.
+  createText(@Body() body: CreteExampleDto) {
+    console.log(body);
+  }
 
-  // Added the Get decorator to the getText() method.
   @Get(':id')
-  // Created the getText() method.
-  getText() {}
+  getText(@Param('id') id: string) {
+    console.log(id);
+  }
 }
