@@ -1,40 +1,46 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+// Imported NotFoundException from @nestjs/common.
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreteExampleDto } from './dtos/create-example.dto';
-// import { ExampleService_BadPractice } from './example.service';
 import { ExampleService_BadPractice } from './example.service';
 
 @Controller('example')
 export class ExampleController {
-  // !!! ALERT !!!
-  // This is not a good practice.
-  // Please use dependency injection instead.
-  // Create a private property that will be used to access the data.
   exampleService_BadPractice: ExampleService_BadPractice;
 
-  // Create a constructor that will be used to create the dependencies.
   constructor() {
-    // Service is creating its own dependencies.
     this.exampleService_BadPractice = new ExampleService_BadPractice();
   }
 
   @Get()
   listText() {
-    // Return the result of calling the findAll method on the exampleService_BadPractice property.
-    // The key point here is that we are returning the result of calling the findAll method on the exampleService_BadPractice property.
     return this.exampleService_BadPractice.findAll();
   }
 
   @Post()
   createText(@Body() body: CreteExampleDto) {
-    // Return the result of calling the create method on the exampleService_BadPractice property.
-    // The key point here is that we are returning the result of calling the create method on the exampleService_BadPractice property.
     return this.exampleService_BadPractice.create(body.text);
   }
 
-  @Get(':id')
-  getText(@Param('id') id: string) {
-    // Return the result of calling the findOne method on the exampleService_BadPractice property.
-    // The key point here is that we are returning the result of calling the findOne method on the exampleService_BadPractice property.
-    return this.exampleService_BadPractice.findOne(id);
+  @Get('/:id')
+  // Added async to the function.
+  async getText(@Param('id') id: string) {
+    // Assigned the result of the function to a variable.
+    const message = await this.exampleService_BadPractice.findOne(id);
+
+    // Added an if statement to check if the variable is undefined.
+    if (!message) {
+      // Threw the exception.
+      throw new NotFoundException();
+    }
+    // Returned the variable.
+    return message;
   }
 }
+// This is just a example how to use ExceptionFilter. There are other exceptions. You can find them in the NestJS documentation.
