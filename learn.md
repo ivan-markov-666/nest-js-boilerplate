@@ -6,7 +6,7 @@ Example of extracting the requested data and assigning it to a variable.
 Example of validating the requested data using pipes (validation pipes).  
 Example of how to use the DTO (Data Transfer Object) pattern.
 
-### Create a new NestJS project from the CLI.  
+### Added to the project:   
 1. The example.controller.ts file was edited. See the file for more details.  
 2. Start the server.  
 3. Test the code by sending a request to the server:  
