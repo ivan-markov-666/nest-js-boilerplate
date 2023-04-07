@@ -17,9 +17,10 @@ Content-Type: application/json
   "text": 1234
 }
 
-### Get a particular text message 1
-GET http://localhost:3000/example/1
-### Get a particular text message 2
-GET http://localhost:3000/example/324234234234
+### Get a particular text message by id. Change the id to the one you want to get.
+GET http://localhost:3000/example/583
+
+### Get a particular text message by id that doesn't exist.
+GET http://localhost:3000/example/5831231231232134234234
 
 
