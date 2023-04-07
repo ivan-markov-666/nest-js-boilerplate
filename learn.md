@@ -2,58 +2,39 @@
 That file shows what was done at that branch. Remember, the branches are named with a number prefix. The number prefix indicates the lecture's progress. Starting from the first branch, you will be able to learn how to create a new NestJS project from scratch.  
 
 ## What was done in that lecture:  
-All project files ware deleted.  
-A new project started from scratch.    
-
-### Precondition  
-1. Install @netsjs/cli on your OS.  
+Example of extracting the requested data and assigning it to a variable.
+Example of validating the requested data using pipes (validation pipes).  
+Example of how to use the DTO (Data Transfer Object) pattern.
 
 ### Create a new NestJS project from the CLI.  
-1. Create a new folder in a random place.  
-2. Open the terminal and navigate to the newly created folder.  
-3. Execute the following command in the folder:  
-> nest new learningNestJs  
-4. Finish the installation process.  
-5. Open the project in your favorite IDE.  
-6. Run the project with the following command:  
-> npm run start:dev  
-7. Open the browser and navigate to the following URL:  
-> http://localhost:3000/  
-8. You should see the following message:  
-> Hello World!  
-9. Stop the server.  
-10. We will remove the default controller, service and module files.  
-Delete the following files:  
-> app.controller.ts  
-> app.service.ts  
-> app.module.ts  
-11. We will generate a new module.  
-12. Execute the following command in the terminal:  
-> nest g module example  
-13. You should see the following message:  
-> CREATE src/example/example.module.ts  
-14. Replace the app.module.ts file with example.module.ts in the main.ts file.  
-15. We will generate a new controller.  
-16. Execute the following command in the terminal:  
-> nest g controller example/example --flat  
-"nest g controller" - means generate controller.  
-"example/example" - means the controller will be generated in the 'example' folder and call the class 'example'.  
-"--flat" - means the controller will be generated in the 'example' folder and not in the 'example/example' folder.  
-17. You should see the following message:  
-> CREATE src/example/example.controller.ts  
-> CREATE src/example/example.controller.spec.ts  
-> UPDATE src/example/example.module.ts  
-18. Update the example.controller.ts file. See the file for more details.  
-19. Added REST Client extension to VS Code:  
-> https://marketplace.visualstudio.com/items?itemName=humao.rest-client  
-20. Create a new file in the root folder of the project.  
-> example.http  
-21. Start the server.  
-22. Press the "Send Request" button in the VS Code (the button should be located between line 2 and 3 from the example.http file). You can test other requests too.  
+1. The example.controller.ts file was edited. See the file for more details.  
+2. Start the server.  
+3. Test the code by sending a request to the server:  
+> curl -X POST -H "Content-Type: application/json" -d '{"text": "Hello World"}' http://localhost:3000/example  
+Check the server's console for the response.  
+> curl http://localhost:3000/example/1  
+Check the server's console for the response.  
+> curl http://localhost:3000/example/1243124234  
+4. Tests in example.http file ware updated.  
+5. The main.ts file was edited. See the file for more details.  
+6. You may need to install the class-transformer package responsible for transforming the data:  
+> npm install class-transformer  
+7. Restart the server.  
+8. New folder was created: 'src/example/dtos'.  
+9. New file was created: 'src/example/dtos/create-example.dto.ts'. See the file for more details.  
+10. Install the class-validator package responsible for validating the data:  
+> npm install class-validator  
+11. Restart the server.  
+12. We need to edit the example.controller.ts file to apply the validation. See the file for more details.  
+13. Test the code by sending a request to the server:  
+> curl -X POST -H "Content-Type: application/json" -d '{"text": "Hello World"}' http://localhost:3000/example  
+Check the server's console for the response. The response code should be 200.  
+> curl -X POST -H "Content-Type: application/json" -d '{"text": 123}' http://localhost:3000/example  
+Check the server's console for the response. The response code should be 400.  
+14. The example.http file was updated. See the file for more details.  
+
 
 !!! Alert !!!  
-If you don't comment the .eslintrc.js file, you will get the following error:
-> Unexpected empty method 'listText'.
-> Unexpected empty method 'createText'.
-> Unexpected empty method 'getText'.
-Don't worry, the server will still work. We will fix this in the next lecture.
+If you don't comment on the .eslintrc.js file, you will get the following error:  
+> Unexpected empty method 'listText'.  
+Don't worry, and the server will still work. We will fix this in the following lecture.  
