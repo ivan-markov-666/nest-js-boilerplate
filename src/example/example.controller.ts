@@ -7,28 +7,28 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreteExampleDto } from './dtos/create-example.dto';
-import { ExampleService_BestPractice } from './example.service';
+import { ExampleService_BetterPractice } from './example.service';
 
 @Controller('example')
 export class ExampleController {
-  // Add the exampleService_BestPractice to the constructor.
+  // Add the exampleService_BetterPractice to the constructor.
   constructor(
-    public exampleService_BestPractice: ExampleService_BestPractice,
+    public exampleService_BetterPractice: ExampleService_BetterPractice,
   ) {}
 
   @Get()
   listText() {
-    return this.exampleService_BestPractice.findAll();
+    return this.exampleService_BetterPractice.findAll();
   }
 
   @Post()
   createText(@Body() body: CreteExampleDto) {
-    return this.exampleService_BestPractice.create(body.text);
+    return this.exampleService_BetterPractice.create(body.text);
   }
 
   @Get('/:id')
   async getText(@Param('id') id: string) {
-    const message = await this.exampleService_BestPractice.findOne(id);
+    const message = await this.exampleService_BetterPractice.findOne(id);
 
     if (!message) {
       throw new NotFoundException();
