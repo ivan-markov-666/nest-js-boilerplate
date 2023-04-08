@@ -6,7 +6,7 @@ POST http://localhost:3000/example
 Content-Type: application/json
 
 {
-  "text": "Hello World"
+  "text": "New Hello World"
 }
 
 ### Create a new text message using number
