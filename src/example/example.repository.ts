@@ -1,8 +1,6 @@
-// Import the 'Injectable' decorator from the NestJS core package.
 import { Injectable } from '@nestjs/common';
 import { readFile, writeFile } from 'fs/promises';
 
-// Add the 'Injectable' decorator to the class.
 @Injectable()
 export class ExampleRepository {
   async findOne(id: string) {

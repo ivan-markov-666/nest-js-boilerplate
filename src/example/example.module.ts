@@ -5,7 +5,6 @@ import { ExampleRepository } from './example.repository';
 
 @Module({
   controllers: [ExampleController],
-  // Add the 'ExampleService_BetterPractice' to the providers array.
   providers: [ExampleService_BetterPractice, ExampleRepository],
 })
 export class ExampleModule {}
