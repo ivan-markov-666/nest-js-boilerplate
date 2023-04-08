@@ -5,7 +5,7 @@ import { ExampleRepository } from './example.repository';
 
 // Add the 'Injectable' decorator to the class.
 @Injectable()
-export class ExampleService_BestPractice {
+export class ExampleService_BetterPractice {
   // This is a bad practice because the service is tightly coupled to the repository.
   constructor(public exampleRepo: ExampleRepository) {}
 
