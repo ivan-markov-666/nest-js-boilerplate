@@ -1,16 +1,15 @@
-// Import 'Body' and 'Post' from the @nestjs/common package.
 import { Body, Controller, Post } from '@nestjs/common';
-// Import 'CreteUserDto' from the './dtos/create-user.dto' file.
 import { CreteUserDto } from './dtos/create-user.dto';
+// Import the UsersService class from the users.service.ts file.
+import { UsersService } from './users.service';
 
-// Changed the endpoint to '/auth'.
 @Controller('auth')
 export class UsersController {
-  // Created a new endpoint '/signup' with the Post decorator.
+  // Inject the UsersService class into the UsersController class using the constructor.
+  constructor(private usersService: UsersService) {}
   @Post('/signup')
-  // Added the 'createUser' method with the 'CreteUserDto' parameter.
   createUser(@Body() body: CreteUserDto) {
-    // Added a console.log() statement to log the body.
-    console.log(body);
+    // Call the create() method from the UsersService class and pass the email and password as arguments to the method.
+    this.usersService.create(body.email, body.password);
   }
 }
