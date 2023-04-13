@@ -4,7 +4,7 @@ That file shows what was done at that branch. Remember, the branches are named w
 ## What was done in that lecture:  
 Added new packages to the project.
 Created connection to the database.
-Created basic user signup functionality.
+Created basic user signup functionality (user controller).
 
 ### Added to the project:  
 1. Created a new nestjs project by running the following command in the root of the project:  
