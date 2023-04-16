@@ -8,17 +8,15 @@ import { Users } from './users.entity';
 
 @Injectable()
 export class UsersService {
-  // Inject the Users repository into the service constructor using the @InjectRepository() decorator from TypeORM NestJS package and pass the Users entity as an argument to the decorator to tell TypeORM which repository to inject.
-  // The @InjectRepository() decorator will automatically create a repository instance for the Users entity and inject it into the service constructor.
   constructor(@InjectRepository(Users) private repo: Repository<Users>) {}
 
-  // Create a method to create a new user
   create(email: string, password: string) {
-    // Create a new user instance using the Users entity and pass the email and password as arguments to the create() method
-    // It is important to note that the create() method does not save the user to the database. It only creates a new user instance, but we need to save the user to the database using the save() method first.
+    /** 
+     * // If we provide 'email' and 'password' to the 'create' method, it will create a new user, and then use the 'hook' methods. Uncomment the following lines to see the result.
     const user = this.repo.create({ email, password });
-    // Save the user to the database using the save() method and return the saved user to the caller of the create() method.
-    // It is important to note that the save() method should be called after the create() method because the create() method does not save the user to the database.
     return this.repo.save(user);
+    */
+    // If we provide 'email' and 'password' to the 'save' method, it will create a new user, without using the 'hook' methods.
+    return this.repo.save({ email, password });
   }
 }
