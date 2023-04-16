@@ -7,8 +7,8 @@ user.service.ts file was updated. It contains the user service class. The class 
 ### Added to the project:  
 1. Edited the 'src\users\users.service.ts' file. Added constructor and create method. See the file for more details.
 2. Edited the 'src\users\users.controller.ts' file. See the file for more details.
-3. Start the server with the command:
+3. Start the server with the command:  
     > npm run start:dev
-4. Test the code. You can use the 'src\users\request.http' file to test the code or you can execute the following cURL commands in the terminal:
+4. Test the code. You can use the 'src\users\request.http' file to test the code or you can execute the following cURL commands in the terminal:  
 curl -X POST http://localhost:3000/auth/signup -H 'Content-Type: application/json' -d '{"email": "testingemail3@testingdomain.com", "password": "TestingPassword123!@#"}'
 5. Check the DB table for the new record. Check lecture 7 for more details.
