@@ -19,6 +19,9 @@ Find a particular user with a given ID.
 
 Find all users with a given email (change the email address with real data, that exists in the database).
     > curl http://localhost:3000/auth?email=testingemail@testingdomain.com
+    
+Delete a particular user with a given ID.
+    > curl -X DELETE http://localhost:3000/auth/22123432
 
 Update a user with a given ID.
     > curl -X PATCH -H "Content-Type: application/json" -d '{"email": "testingemailTest2@testingdomain.com"}' http://localhost:3000/auth/9
