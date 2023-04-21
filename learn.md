@@ -10,7 +10,7 @@ Added new DTO file 'src\users\dto\update-user.dto.ts'. This file contains the da
 1. Edited the 'src\users\users.service.ts' file. Added two methods: 'update' and 'remove'. For more information, see the file.  
 2. Edited the 'src\users\users.controller.ts' file. Added four methods: 'findUser', 'findAllUsers', 'delete' and 'updateUser'. For more information, see the file.  
 3. Added new DTO file 'src\users\dto\update-user.dto.ts'. This file contains the data transfer object for the 'update' method. For more information, see the file.
-3. Start the server with the command:
+4. Start the server with the command:
     > npm run start:dev
 
 Test the code. You can use the 'src\users\request.http' file to test the code or you can execute the following cURL commands in the terminal: 
