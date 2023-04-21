@@ -1,3 +1,4 @@
+// Removed the @Entity() decorator from that file.
 import {
   Entity,
   Column,
@@ -6,9 +7,6 @@ import {
   AfterUpdate,
   AfterRemove,
 } from 'typeorm';
-// Import 'Exclude' from 'class-transformer' to hide password from response.
-// Nest recomended solution for hiding sensitive data is using the `@Exclude()` decorator.
-import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Users {
@@ -19,8 +17,6 @@ export class Users {
   email: string;
 
   @Column()
-  // Add 'Exclude' decorator to hide password from response.
-  @Exclude()
   password: string;
 
   @AfterInsert()

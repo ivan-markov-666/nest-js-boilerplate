@@ -1,4 +1,3 @@
-// Added 'UseInterceptors' and 'ClassSerializerInterceptor' to hide password from response.
 import {
   Body,
   Controller,
@@ -10,11 +9,12 @@ import {
   Delete,
   NotFoundException,
   UseInterceptors,
-  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { CreteUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
+// Import the 'SerializeInterceptor' from the 'src\interceptors\serialize.interceptor.ts' file.
+import { SerializeInterceptor } from '../interceptors/serialize.interceptor';
 
 @Controller('auth')
 export class UsersController {
@@ -25,10 +25,12 @@ export class UsersController {
     this.usersService.create(body.email, body.password);
   }
 
-  // Added 'UseInterceptors' and 'ClassSerializerInterceptor' to hide password from response.
-  @UseInterceptors(ClassSerializerInterceptor)
+  // Change the 'ClassSerializerInterceptor' to 'SerializeInterceptor' in the 'UseInterceptors' decorator.
+  @UseInterceptors(SerializeInterceptor)
   @Get('/:id')
   async findUser(@Param('id') id: string) {
+    // Print the 'handler is running' message to the console.
+    console.log('handler is running');
     const user = await this.usersService.findOne(parseInt(id));
     if (!user) {
       throw new NotFoundException('user not found');
