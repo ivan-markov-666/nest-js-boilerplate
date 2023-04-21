@@ -1,4 +1,4 @@
-// Added 'NotFoundException' from the '@nestjs/common' module.
+// Added 'UseInterceptors' and 'ClassSerializerInterceptor' to hide password from response.
 import {
   Body,
   Controller,
@@ -9,6 +9,8 @@ import {
   Query,
   Delete,
   NotFoundException,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { CreteUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
@@ -23,26 +25,14 @@ export class UsersController {
     this.usersService.create(body.email, body.password);
   }
 
-  /**
-   * @description     Find a user by id.
-   * @param id        The id of the user.
-   * @returns         The user.
-   *                    - If the user is not found, it will return a 404 status code.
-   *                    - If the user is found, it will return a 200 status code.
-   */
+  // Added 'UseInterceptors' and 'ClassSerializerInterceptor' to hide password from response.
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get('/:id')
-  // Add the 'async' keyword to the 'findUser' method.
   async findUser(@Param('id') id: string) {
-    // Declare the 'user' variable and assign the result of the 'findOne' method to it.
-    // Add the 'await' keyword to the 'findOne' method.
     const user = await this.usersService.findOne(parseInt(id));
-    // Check if the 'user' variable is undefined.
     if (!user) {
-      // Throw the 'NotFoundException' instead of the 'Error' object.
-      // The benefit of using the 'NotFoundException' is that it will return a 404 status code. With 'Error' it will return a 500 status code.
       throw new NotFoundException('user not found');
     }
-    // Return the 'user' variable.
     return user;
   }
 
