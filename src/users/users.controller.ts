@@ -25,11 +25,10 @@ export class UsersController {
     this.usersService.create(body.email, body.password);
   }
 
-  // Change the 'ClassSerializerInterceptor' to 'SerializeInterceptor' in the 'UseInterceptors' decorator.
+  // Add the 'SerializeInterceptor' to the 'findUser' method.
   @UseInterceptors(SerializeInterceptor)
   @Get('/:id')
   async findUser(@Param('id') id: string) {
-    // Print the 'handler is running' message to the console.
     console.log('handler is running');
     const user = await this.usersService.findOne(parseInt(id));
     if (!user) {

@@ -1,4 +1,4 @@
-// Removed the @Entity() decorator from that file.
+// The 'Exclude()' decorator was removed from the 'User' class.
 import {
   Entity,
   Column,
