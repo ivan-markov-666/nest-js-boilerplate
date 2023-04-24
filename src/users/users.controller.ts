@@ -13,7 +13,6 @@ import {
 import { CreteUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
-// Import the 'SerializeInterceptor' from the 'src\interceptors\serialize.interceptor.ts' file.
 import { SerializeInterceptor } from '../interceptors/serialize.interceptor';
 
 @Controller('auth')
@@ -25,7 +24,6 @@ export class UsersController {
     this.usersService.create(body.email, body.password);
   }
 
-  // Add the 'SerializeInterceptor' to the 'findUser' method.
   @UseInterceptors(SerializeInterceptor)
   @Get('/:id')
   async findUser(@Param('id') id: string) {
