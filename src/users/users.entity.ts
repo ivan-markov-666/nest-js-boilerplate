@@ -1,4 +1,3 @@
-// The 'Exclude()' decorator was removed from the 'User' class.
 import {
   Entity,
   Column,
