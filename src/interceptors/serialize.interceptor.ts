@@ -1,16 +1,25 @@
-import { NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
+import {
+  NestInterceptor,
+  ExecutionContext,
+  CallHandler,
+  // Add 'UseInterceptors' decorator to the controller.
+  UseInterceptors,
+} from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { plainToClass } from 'class-transformer';
-// Delete 'UserDto' import.
+
+// This is a decorator factory function that takes a DTO as an argument.
+export function Serialize(dto: any) {
+  // It returns a decorator function. This decorator function takes a handler as an argument.
+  return UseInterceptors(new SerializeInterceptor(dto));
+}
 
 export class SerializeInterceptor implements NestInterceptor {
-  // Add 'dto' property.
   constructor(private dto: any) {}
   intercept(context: ExecutionContext, handler: CallHandler): Observable<any> {
     return handler.handle().pipe(
       map((data: any) => {
-        // Replace 'UserDto' with 'this.dto'. This will allow us to use this interceptor with any DTO.
         return plainToClass(this.dto, data, {
           excludeExtraneousValues: true,
         });
