@@ -8,6 +8,8 @@ import {
   Query,
   Delete,
   NotFoundException,
+  // Added 'Session' to the import statement.
+  Session,
 } from '@nestjs/common';
 import { CreteUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
@@ -23,6 +25,23 @@ export class UsersController {
     private usersService: UsersService,
     private authService: AuthService,
   ) {}
+
+  // Example of using the session object.
+  // Add the "Get" decorator for '/colors/:color'.
+  @Get('/colors/:color')
+  // Added 'setColor' method. The '@Param' decorator is used to get the color and the '@Session' decorator is used to get the session object.
+  setColor(@Param('color') color: string, @Session() session: any) {
+    // Set the color property on the session object.
+    session.color = color;
+  }
+
+  // Add the "Get" decorator for '/colors'.
+  @Get('/colors')
+  // Added 'getColor' method. The '@Session' decorator is used to get the session object.
+  getColor(@Session() session: any) {
+    // Return the color property on the session object.
+    return session.color;
+  }
 
   @Post('/signup')
   createUser(@Body() body: CreteUserDto) {

@@ -32,3 +32,8 @@ content-type: application/json
 {
     "email": "testingemailTest2@testingdomain.com"
 }
+
+### Set a animal.
+GET http://localhost:3000/auth/colors/red
+### Get a color
+GET http://localhost:3000/auth/colors
