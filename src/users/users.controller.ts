@@ -14,7 +14,6 @@ import { UsersService } from './users.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
-// Import the 'AuthService' from src\users\auth.service.ts.
 import { AuthService } from './auth.service';
 
 @Controller('auth')
@@ -22,20 +21,16 @@ import { AuthService } from './auth.service';
 export class UsersController {
   constructor(
     private usersService: UsersService,
-    private authService: AuthService, // Inject the 'AuthService' into the constructor.
+    private authService: AuthService,
   ) {}
 
   @Post('/signup')
   createUser(@Body() body: CreteUserDto) {
-    // Remove "this.usersService.create(body.email, body.password);" and replace it with "this.authService.signup(body.email, body.password);
-    return this.authService.signup(body.email, body.password); // Call the 'signup' method from the 'AuthService'.
+    return this.authService.signup(body.email, body.password);
   }
 
-  // Add a new route handler for the '/signin' route.
   @Post('/signin')
-  // 'signin' method is used for signing in a user.
   signin(@Body() body: CreteUserDto) {
-    // Return the 'signin' method from the 'AuthService'.
     return this.authService.signin(body.email, body.password);
   }
 
