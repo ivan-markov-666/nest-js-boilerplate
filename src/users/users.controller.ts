@@ -16,7 +16,6 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
-// import { CurrentUser } from './decorators/current-user.decorator';
 import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('auth')
@@ -32,11 +31,8 @@ export class UsersController {
   //   return this.usersService.findOne(session.userId);
   // }
 
-  // Example of using a custom decorator to get the current user.
   @Get('/whoami')
-  // create a custom decorator to get the current user.
   whoAmI(@CurrentUser() user: string) {
-    // return the data from the custom decorator.
     return user;
   }
 
