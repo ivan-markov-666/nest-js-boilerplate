@@ -3,7 +3,7 @@ POST http://localhost:3000/auth/signup
 content-type: application/json
 
 {
-    "email": "testingemailTest@testingdomain.com",
+    "email": "testingemailTest2224@testingdomain.com",
     "password": "TestingPassword123!@#"
 }
 
@@ -12,28 +12,29 @@ POST http://localhost:3000/auth/signin
 content-type: application/json
 
 {
-    "email": "testingemailTest@testingdomain.com",
+    "email": "testingemailTest2224@testingdomain.com",
     "password": "TestingPassword123!@#"
 }
 
+### Get the current signed in user
+GET http://localhost:3000/auth/whoami
+
+### Sign out a user
+POST http://localhost:3000/auth/signout
+
 ### Find a particular user with a given ID.
-GET http://localhost:3000/auth/9
+GET http://localhost:3000/auth/14
 
 ### Find all users with a given email.
-GET http://localhost:3000/auth?email=testingemail@testingdomain.com
+GET http://localhost:3000/auth?email=testingemailTest2224@testingdomain.com
 
 ### Delete a user with a given ID.
 DELETE http://localhost:3000/auth/22123432
 
 ### Update a user with a given ID.
-PATCH http://localhost:3000/auth/9
+PATCH http://localhost:3000/auth/14
 content-type: application/json
 
 {
     "email": "testingemailTest2@testingdomain.com"
 }
-
-### Set a animal.
-GET http://localhost:3000/auth/colors/red
-### Get a color
-GET http://localhost:3000/auth/colors

@@ -8,7 +8,6 @@ import {
   Query,
   Delete,
   NotFoundException,
-  // Added 'Session' to the import statement.
   Session,
 } from '@nestjs/common';
 import { CreteUserDto } from './dtos/create-user.dto';
@@ -26,31 +25,42 @@ export class UsersController {
     private authService: AuthService,
   ) {}
 
-  // Example of using the session object.
-  // Add the "Get" decorator for '/colors/:color'.
-  @Get('/colors/:color')
-  // Added 'setColor' method. The '@Param' decorator is used to get the color and the '@Session' decorator is used to get the session object.
-  setColor(@Param('color') color: string, @Session() session: any) {
-    // Set the color property on the session object.
-    session.color = color;
+  // Added new @Get() route for checking the current user in the session.
+  @Get('/whoami')
+  // Added '@Session()' to the whoAmI method.
+  whoAmI(@Session() session: any) {
+    // Return the user.
+    return this.usersService.findOne(session.userId);
   }
 
-  // Add the "Get" decorator for '/colors'.
-  @Get('/colors')
-  // Added 'getColor' method. The '@Session' decorator is used to get the session object.
-  getColor(@Session() session: any) {
-    // Return the color property on the session object.
-    return session.color;
+  // Added new @Post() route for signout.
+  @Post('/signout')
+  signout(@Session() session: any) {
+    session.userId = null;
   }
 
+  // Added new @Post() route for signup.
   @Post('/signup')
-  createUser(@Body() body: CreteUserDto) {
-    return this.authService.signup(body.email, body.password);
+  // Added '@Session()' to the createUser method.
+  async createUser(@Body() body: CreteUserDto, @Session() session: any) {
+    // Assign the user id to the 'user' const.
+    const user = await this.authService.signup(body.email, body.password);
+    // Assign the user id to the session.
+    session.userId = user.id;
+    // Return the user.
+    return user;
   }
 
+  // Added new @Post() route for signin.
   @Post('/signin')
-  signin(@Body() body: CreteUserDto) {
-    return this.authService.signin(body.email, body.password);
+  // Added '@Session()' to the signin method.
+  async signin(@Body() body: CreteUserDto, @Session() session: any) {
+    // Assign the user id to the 'user' const.
+    const user = await this.authService.signin(body.email, body.password);
+    // Assign the user id to the session.
+    session.userId = user.id;
+    // Return the user.
+    return user;
   }
 
   @Get('/:id')
