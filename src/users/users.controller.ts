@@ -16,6 +16,8 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
+// import { CurrentUser } from './decorators/current-user.decorator';
+import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -25,41 +27,35 @@ export class UsersController {
     private authService: AuthService,
   ) {}
 
-  // Added new @Get() route for checking the current user in the session.
+  // @Get('/whoami')
+  // whoAmI(@Session() session: any) {
+  //   return this.usersService.findOne(session.userId);
+  // }
+
+  // Example of using a custom decorator to get the current user.
   @Get('/whoami')
-  // Added '@Session()' to the whoAmI method.
-  whoAmI(@Session() session: any) {
-    // Return the user.
-    return this.usersService.findOne(session.userId);
+  // create a custom decorator to get the current user.
+  whoAmI(@CurrentUser() user: string) {
+    // return the data from the custom decorator.
+    return user;
   }
 
-  // Added new @Post() route for signout.
   @Post('/signout')
   signout(@Session() session: any) {
     session.userId = null;
   }
 
-  // Added new @Post() route for signup.
   @Post('/signup')
-  // Added '@Session()' to the createUser method.
   async createUser(@Body() body: CreteUserDto, @Session() session: any) {
-    // Assign the user id to the 'user' const.
     const user = await this.authService.signup(body.email, body.password);
-    // Assign the user id to the session.
     session.userId = user.id;
-    // Return the user.
     return user;
   }
 
-  // Added new @Post() route for signin.
   @Post('/signin')
-  // Added '@Session()' to the signin method.
   async signin(@Body() body: CreteUserDto, @Session() session: any) {
-    // Assign the user id to the 'user' const.
     const user = await this.authService.signin(body.email, body.password);
-    // Assign the user id to the session.
     session.userId = user.id;
-    // Return the user.
     return user;
   }
 

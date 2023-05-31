@@ -13,9 +13,7 @@ export class UsersService {
   }
 
   findOne(id: number) {
-    // Added a check for the id.
     if (!id) {
-      // Return null if the id is not found.
       return null;
     }
     return this.repo.findOne({ where: { id } });
