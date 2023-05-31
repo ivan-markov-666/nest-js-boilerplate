@@ -1,11 +1,11 @@
-// import the createParamDecorator() and ExecutionContext from @nestjs/common package.
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 
-// create a custom decorator to get the current user.
 export const CurrentUser = createParamDecorator(
-  // create a function that will return the data from the custom decorator.
   (data: never, context: ExecutionContext) => {
-    // Return some testing data.
+    // Get the request object from NestJS context object (which is the 2nd argument of the decorator) and then get the session object from the request object.
+    const request = context.switchToHttp().getRequest();
+    // Print out the session object to see what it looks like.
+    console.log('request.session.userId', request.session.userId);
     return 'testing message';
   },
 );
