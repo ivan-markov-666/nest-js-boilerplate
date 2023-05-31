@@ -4,10 +4,13 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
 import { Users } from './users.entity';
+// Import the 'CurrentUserInterceptor' interceptor.
+import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Users])],
   controllers: [UsersController],
-  providers: [UsersService, AuthService],
+  // Add the 'CurrentUserInterceptor' interceptor to the 'providers' array.
+  providers: [UsersService, AuthService, CurrentUserInterceptor],
 })
 export class UsersModule {}
