@@ -11,7 +11,8 @@ Changed the way for providing the current user's session, by adding a custom dec
 3. Start the server by running the following command in the terminal:
 > npm run start:dev
 
-4. Test the code. You can use the 'src\users\request.http' file to test the code or you can execute the following cURL command in the terminal:
+4. Test the code. You can use the 'src\users\request.http' file to test the code or you can execute the following cURL commands in the terminal (you need to sign in, then you need to check the user in the session):
+> curl -X POST -H "Content-Type: application/json" -d '{"email":"testingemailTest222@testingdomain.com","password":"TestingPassword123!@#"}' http://localhost:3000/auth/signup
 > curl http://localhost:3000/auth/whoami
 
 The result will be:
