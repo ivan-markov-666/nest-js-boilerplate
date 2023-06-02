@@ -36,7 +36,11 @@ To see the cookies and other headers, you can use the 'src\users\request.http' f
 
 > curl http://localhost:3000/auth/whoami
 
-There will not be any result in the terminal. To see the message you need to check the server terminal. To see the cookies and other headers, you can use the 'src\users\request.http' file.
+The result will be similar to the following:
+```
+{"id":17,"email":"testingemailTest22251@testingdomain.com"}
+```
+To see the cookies and other headers, you can use the 'src\users\request.http' file.
 
 > curl -X POST http://localhost:3000/auth/signout
 
