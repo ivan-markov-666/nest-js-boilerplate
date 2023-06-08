@@ -9,7 +9,8 @@ import {
   Delete,
   NotFoundException,
   Session,
-  // Remove the 'UseInterceptors' decorator.
+  // Add the 'UseGuards' decorator to the controller class.
+  UseGuards,
 } from '@nestjs/common';
 import { CreteUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
@@ -18,12 +19,12 @@ import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
-// Remove the 'import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';' statement.
 import { Users } from './users.entity';
+// Import the 'AuthGuard' class.
+import { AuthGuard } from './guards/auth.guard';
 
 @Controller('auth')
 @Serialize(UserDto)
-// Remove the '@UseInterceptors(CurrentUserInterceptor)' decorator from the UsersController class.
 export class UsersController {
   constructor(
     private usersService: UsersService,
@@ -36,6 +37,8 @@ export class UsersController {
   // }
 
   @Get('/whoami')
+  // Add the 'UseGuards' decorator to the whoAmI method. Provide the 'AuthGuard' class as an argument.
+  @UseGuards(AuthGuard)
   whoAmI(@CurrentUser() user: Users) {
     return user;
   }
