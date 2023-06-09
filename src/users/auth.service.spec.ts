@@ -1,28 +1,36 @@
 import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
-// Import 'Users' entity to use it in the fakeUsersService object below to mock the UsersService dependency in the AuthService class.
 import { Users } from './users.entity';
 
-it('can create an instance of auth service', async () => {
-  // Add 'Partial' to the fakeUsersService object to mock the UsersService dependency in the AuthService class.
-  const fakeUsersService: Partial<UsersService> = {
-    find: () => Promise.resolve([]),
-    create: (email: string, password: string) =>
-      // Add 'as Users' to the end of the object to mock the UsersService dependency in the AuthService class.
-      Promise.resolve({ id: 1, email, password } as Users),
-  } as unknown as UsersService;
+// Define 'describe' block. Inside the block define 'AuthService' and 'UsersService' variables. This block is used to group tests together.
+describe('AuthService', () => {
+  // Define 'service' variable.
+  let service: AuthService;
 
-  const module = await Test.createTestingModule({
-    providers: [
-      AuthService,
-      {
-        provide: UsersService,
-        useValue: fakeUsersService,
-      },
-    ],
-  }).compile();
+  // Add 'beforeEach' block. Inside the block move the 'fakeUserService' and 'module' variables from the 'it' block. By that approach, we can use the 'fakeUserService' in all 'it' blocks (the code inside the 'beforeEach' block will run before each 'it' block).
+  beforeEach(async () => {
+    const fakeUsersService: Partial<UsersService> = {
+      find: () => Promise.resolve([]),
+      create: (email: string, password: string) =>
+        Promise.resolve({ id: 1, email, password } as Users),
+    } as unknown as UsersService;
 
-  const service = module.get(AuthService);
-  expect(service).toBeDefined();
+    const module = await Test.createTestingModule({
+      providers: [
+        AuthService,
+        {
+          provide: UsersService,
+          useValue: fakeUsersService,
+        },
+      ],
+    }).compile();
+
+    // Remove 'const' keyword from the 'service' variable, because we define it in beginning of the file.
+    service = module.get(AuthService);
+  });
+
+  it('can create an instance of auth service', async () => {
+    expect(service).toBeDefined();
+  });
 });
