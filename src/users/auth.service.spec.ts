@@ -3,12 +3,9 @@ import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { Users } from './users.entity';
 
-// Define 'describe' block. Inside the block define 'AuthService' and 'UsersService' variables. This block is used to group tests together.
 describe('AuthService', () => {
-  // Define 'service' variable.
   let service: AuthService;
 
-  // Add 'beforeEach' block. Inside the block move the 'fakeUserService' and 'module' variables from the 'it' block. By that approach, we can use the 'fakeUserService' in all 'it' blocks (the code inside the 'beforeEach' block will run before each 'it' block).
   beforeEach(async () => {
     const fakeUsersService: Partial<UsersService> = {
       find: () => Promise.resolve([]),
@@ -26,11 +23,30 @@ describe('AuthService', () => {
       ],
     }).compile();
 
-    // Remove 'const' keyword from the 'service' variable, because we define it in beginning of the file.
     service = module.get(AuthService);
   });
 
   it('can create an instance of auth service', async () => {
     expect(service).toBeDefined();
+  });
+
+  // Add 'it' block.
+  it('creates a new user with a salted and hashed password', async () => {
+    // Execute the 'service.signup' method and assign the result to a variable.
+    const user = await service.signup(
+      // Pass in dummy email data.
+      'testingemail123123wer@qa4free.com',
+      // Pass in dummy password data.
+      'password123',
+    );
+
+    // Expect the user's password to not be the same as the dummy password data. This is because the password is salted and hashed.
+    expect(user.password).not.toEqual('password123');
+    // Expect the user's email to be the same as the dummy email data.
+    const [salt, hash] = user.password.split('.');
+    // Expect the user's email to be the same as the dummy email data.
+    expect(salt).toBeDefined();
+    // Expect the user's email to be the same as the dummy email data.
+    expect(hash).toBeDefined();
   });
 });
