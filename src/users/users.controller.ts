@@ -9,7 +9,6 @@ import {
   Delete,
   NotFoundException,
   Session,
-  // Add the 'UseGuards' decorator to the controller class.
   UseGuards,
 } from '@nestjs/common';
 import { CreteUserDto } from './dtos/create-user.dto';
@@ -20,7 +19,6 @@ import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { Users } from './users.entity';
-// Import the 'AuthGuard' class.
 import { AuthGuard } from './guards/auth.guard';
 
 @Controller('auth')
@@ -37,7 +35,6 @@ export class UsersController {
   // }
 
   @Get('/whoami')
-  // Add the 'UseGuards' decorator to the whoAmI method. Provide the 'AuthGuard' class as an argument.
   @UseGuards(AuthGuard)
   whoAmI(@CurrentUser() user: Users) {
     return user;
