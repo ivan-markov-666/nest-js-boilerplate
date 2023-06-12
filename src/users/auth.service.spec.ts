@@ -2,7 +2,6 @@ import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { Users } from './users.entity';
-// Added 'BadRequestException' to from nestjs/common.
 import { NotFoundException, BadRequestException } from '@nestjs/common';
 
 describe('AuthService', () => {
@@ -10,11 +9,28 @@ describe('AuthService', () => {
   let fakeUsersService: Partial<UsersService>;
 
   beforeEach(async () => {
+    // Create an empty array of users to be used in the fakeUsersService object below (which is used to mock the UsersService).
+    const users: Users[] = [];
     fakeUsersService = {
-      find: () => Promise.resolve([]),
-      create: (email: string, password: string) =>
-        Promise.resolve({ id: 1, email, password } as Users),
-    } as unknown as UsersService;
+      // Refactor the find method to return a filtered array of users based on the email passed in.
+      find: (email: string) => {
+        const filteredUsers = users.filter((user) => user.email === email);
+        return Promise.resolve(filteredUsers);
+      },
+      // Refactor the create method to create a new user object and push it into the users array.
+      create: (email: string, password: string) => {
+        // Create a new user object with a random id, the email and password passed in, and return it.
+        const user = {
+          id: Math.floor(Math.random() * 9999999),
+          email,
+          password,
+        } as Users;
+        // Push the new user object into the users array.
+        users.push(user);
+        // Return the new user object.
+        return Promise.resolve(user);
+      },
+    };
 
     const module = await Test.createTestingModule({
       providers: [
@@ -51,28 +67,29 @@ describe('AuthService', () => {
     ).rejects.toThrow(NotFoundException);
   });
 
-  // Added a test for signin with a email that it is in use.
   it('throws an error if user signs up with email that is in use', async () => {
-    // Create a user with the email that we are going to use in the test.
     fakeUsersService.find = () =>
-      // Return a promise with the user that we created.
       Promise.resolve([{ id: 1, email: 'a', password: '1' } as Users]);
-    // Call the signin method with the email that we created.
     await expect(service.signup('asdf@asdf.com', 'asdf')).rejects.toThrow();
   });
 
-  // Added a test for signin with a valid email and invalid password.
   it('throws if an invalid password is provided', async () => {
-    // Create a user with the email that we are going to use in the test.
     fakeUsersService.find = () =>
-      // Return a promise with the user that we created.
       Promise.resolve([
-        // Create a user with the email that we are going to use in the test.
         { email: 'asdf@asdf.com', password: 'laskdjf' } as Users,
       ]);
-    // Call the signin method with the email that we created.
-    await expect(service.signin('asdf@asdf.com', 'passowrd'))
-      // Expect the promise to throw an error.
-      .rejects.toThrow(BadRequestException);
+    await expect(service.signin('asdf@asdf.com', 'passowrd')).rejects.toThrow(
+      BadRequestException,
+    );
+  });
+
+  // Add a test to check that the signin method returns a user if the correct password is provided.
+  it('returns a user if correct password is provided', async () => {
+    // Create a new user and store it in the fakeUsersService object.
+    await service.signup('test213qwe@qa4free.com', 'password');
+    // Call the signin method and store the result in a variable.
+    const user = await service.signin('test213qwe@qa4free.com', 'password');
+    // Expect the user to be defined.
+    expect(user).toBeDefined();
   });
 });
