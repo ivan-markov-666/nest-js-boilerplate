@@ -2,12 +2,17 @@ import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { Users } from './users.entity';
+// Import the 'NotFoundException' classes from the '@nestjs/common' package.
+import { NotFoundException } from '@nestjs/common';
 
 describe('AuthService', () => {
   let service: AuthService;
+  // Declare a fake users service that will be used in the tests below to replace the real one.
+  let fakeUsersService: Partial<UsersService>;
 
   beforeEach(async () => {
-    const fakeUsersService: Partial<UsersService> = {
+    // Refactor it to use a fake users service. Replace the real one with a fake one.
+    fakeUsersService = {
       find: () => Promise.resolve([]),
       create: (email: string, password: string) =>
         Promise.resolve({ id: 1, email, password } as Users),
@@ -30,23 +35,25 @@ describe('AuthService', () => {
     expect(service).toBeDefined();
   });
 
-  // Add 'it' block.
   it('creates a new user with a salted and hashed password', async () => {
-    // Execute the 'service.signup' method and assign the result to a variable.
     const user = await service.signup(
-      // Pass in dummy email data.
       'testingemail123123wer@qa4free.com',
-      // Pass in dummy password data.
       'password123',
     );
 
-    // Expect the user's password to not be the same as the dummy password data. This is because the password is salted and hashed.
     expect(user.password).not.toEqual('password123');
-    // Expect the user's email to be the same as the dummy email data.
     const [salt, hash] = user.password.split('.');
-    // Expect the user's email to be the same as the dummy email data.
     expect(salt).toBeDefined();
-    // Expect the user's email to be the same as the dummy email data.
     expect(hash).toBeDefined();
+  });
+
+  // Add a test to ensure that the signup method throws an error if the email is not used (not registered).
+  it('throws if signin is called with an unused email', async () => {
+    // Refactor it to use a fake users service. Replace the real one with a fake one.
+    await expect(
+      // Call the signup method with an email that is already in use.
+      service.signin('asdflkj@asdlfkj.com', 'passdflkj'),
+      // Reject the promise if the signup method throws an error.
+    ).rejects.toThrow(NotFoundException);
   });
 });
