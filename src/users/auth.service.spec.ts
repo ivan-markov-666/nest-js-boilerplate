@@ -2,16 +2,14 @@ import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { Users } from './users.entity';
-// Import the 'NotFoundException' classes from the '@nestjs/common' package.
-import { NotFoundException } from '@nestjs/common';
+// Added 'BadRequestException' to from nestjs/common.
+import { NotFoundException, BadRequestException } from '@nestjs/common';
 
 describe('AuthService', () => {
   let service: AuthService;
-  // Declare a fake users service that will be used in the tests below to replace the real one.
   let fakeUsersService: Partial<UsersService>;
 
   beforeEach(async () => {
-    // Refactor it to use a fake users service. Replace the real one with a fake one.
     fakeUsersService = {
       find: () => Promise.resolve([]),
       create: (email: string, password: string) =>
@@ -47,13 +45,34 @@ describe('AuthService', () => {
     expect(hash).toBeDefined();
   });
 
-  // Add a test to ensure that the signup method throws an error if the email is not used (not registered).
   it('throws if signin is called with an unused email', async () => {
-    // Refactor it to use a fake users service. Replace the real one with a fake one.
     await expect(
-      // Call the signup method with an email that is already in use.
       service.signin('asdflkj@asdlfkj.com', 'passdflkj'),
-      // Reject the promise if the signup method throws an error.
     ).rejects.toThrow(NotFoundException);
+  });
+
+  // Added a test for signin with a email that it is in use.
+  it('throws an error if user signs up with email that is in use', async () => {
+    // Create a user with the email that we are going to use in the test.
+    fakeUsersService.find = () =>
+      // Return a promise with the user that we created.
+      Promise.resolve([{ id: 1, email: 'a', password: '1' } as Users]);
+    // Call the signin method with the email that we created.
+    await expect(service.signup('asdf@asdf.com', 'asdf')).rejects.toThrow();
+  });
+
+  // Added a test for signin with a valid email and invalid password.
+  it('throws if an invalid password is provided', async () => {
+    // Create a user with the email that we are going to use in the test.
+    fakeUsersService.find = () =>
+      // Return a promise with the user that we created.
+      Promise.resolve([
+        // Create a user with the email that we are going to use in the test.
+        { email: 'asdf@asdf.com', password: 'laskdjf' } as Users,
+      ]);
+    // Call the signin method with the email that we created.
+    await expect(service.signin('asdf@asdf.com', 'passowrd'))
+      // Expect the promise to throw an error.
+      .rejects.toThrow(BadRequestException);
   });
 });
