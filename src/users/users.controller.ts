@@ -69,8 +69,8 @@ export class UsersController {
   }
 
   @Get()
-  findAllUsers(@Query('email') email: string) {
-    return this.usersService.find(email);
+  async findAllUsers(@Query('email') email: string) {
+    return await this.usersService.find(email);
   }
 
   @Delete('/:id')
