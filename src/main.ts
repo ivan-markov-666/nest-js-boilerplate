@@ -1,21 +1,15 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+// Moved the 'ValidationPipe' imports to 'src\setup-app.ts'.
 import { AppModule } from './app.module';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const cookieSession = require('cookie-session');
+// Moved the 'cookie-session' imports to 'src\setup-app.ts'.
+// Added the 'setupApp' import from 'src\setup-app.ts'.
+import { setupApp } from './setup-app';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(
-    cookieSession({
-      keys: ['asdf'],
-    }),
-  );
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-    }),
-  );
+  // Added the 'setupApp' call.
+  await setupApp(app);
+  // Moved the 'app.use' and 'app.useGlobalPipes' to 'src\setup-app.ts'.
   await app.listen(3000);
 }
 bootstrap();

@@ -2,14 +2,14 @@
 That file shows what was done at that branch. Remember, the branches are named with a number prefix. The number prefix indicates the lecture's progress. Starting from the first branch, you will be able to learn how to create a new NestJS project from scratch.  
 
 ## What was done in that lecture:  
-Added more tests to the 'users.controller.spec.ts' file.
+Added new 'test\auth.e2e-spec.ts' file.
+Added new 'src\setup-app.ts' file.
+Refactored 'src\main.ts' file.
 
 ### Added to the project:  
-1. Added more tests to the 'users.controller.spec.ts' file. For more details see the file.
-2. Start the unit tests by running the following command in the terminal:  
-> npm run test:watch  
+1. Added new example of integration test in the 'test\auth.e2e-spec.ts'.  
+2. 'app.use' and 'app.useGlobalPipes' moved from 'src\main.ts' to newly added 'src\setup-app.ts' file. The idea is to make the 'main.ts' file as simple as possible. And we want to use 'app.use' and 'app.useGlobalPipes' in the 'test\auth.e2e-spec.ts' file (in the integration tests). So 'src\main.ts' file was refactored.  
+3. Start the integration tests with the command:  
+> npm run test:e2e  
 
-And because we want to run single test file, we need select (press) the 'p' key and enter the name of the file. In our case it is 'users.controller.spec.ts' in the terminal:
-> users.controller.spec.ts 
-
-The tests should pass.
+!!! ALert. This is not the NestJS way to run the integration tests. We will learn how to run the integration tests in the NestJS way in the next lecture.
