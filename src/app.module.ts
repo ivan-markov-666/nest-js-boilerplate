@@ -1,6 +1,4 @@
-// Imported the "ValidationPipe" and "MiddlewareConsumer" classes from the '@nestjs/common' package.
 import { Module, ValidationPipe, MiddlewareConsumer } from '@nestjs/common';
-// Imported the 'APP_PIPE' constant from the '@nestjs/core' package.
 import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -9,50 +7,68 @@ import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { Users } from './users/users.entity';
 import { Report } from './reports/report.entity';
-// Added the "cookie-session" package.
+// Importing the 'ConfigModule' and 'ConfigService' from the '@nestjs/config' package to use the environment variables in the application code.
+import { ConfigModule, ConfigService } from '@nestjs/config';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cookieSession = require('cookie-session');
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'database.sqlite',
-      entities: [Users, Report],
-      synchronize: true,
+    // Added 'ConfigModule.forRoot()' to the '@Module' decorator's 'imports' array to load the environment variables.
+    ConfigModule.forRoot({
+      // Added 'isGlobal: true' to make the configuration module available everywhere in the application.
+      isGlobal: true,
+      // Added 'envFilePath: `.env.${process.env.NODE_ENV}`' to load the environment variables from the '.env.development', '.env.test', (etc.) files when the application is running in the development, test... (etc.) environments.
+      envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
+    // Added 'TypeOrmModule.forRootAsync()' to the '@Module' decorator's 'imports' array to load the environment variables from the 'ConfigService'.
+    TypeOrmModule.forRootAsync({
+      // Injecting the 'ConfigService' into the 'TypeOrmModule.forRootAsync()' method.
+      inject: [ConfigService],
+      // Using the 'useFactory' property to load the environment variables from the 'ConfigService'. This is the dependency injection design pattern.
+      useFactory: (config: ConfigService) => {
+        // Returning the database configuration object.
+        return {
+          // Using the 'type' property to specify the database type.
+          type: 'sqlite',
+          // Using the 'database' property to specify the database name.
+          database: config.get<string>('DB_NAME'),
+          // Using the 'entities' property to specify the entities.
+          entities: [Users, Report],
+          // Using the 'synchronize' property to synchronize the database schema with the entities.
+          synchronize: true,
+        };
+      },
+    }),
+    // This is the old way of loading the environment variables from the 'ConfigService', it is commented out because it is not the dependency injection design pattern.
+    // TypeOrmModule.forRoot({
+    //   type: 'sqlite',
+    //   database: 'database.sqlite',
+    //   entities: [Users, Report],
+    //   synchronize: true,
+    // }),
     UsersModule,
     ReportsModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    // Added the "ValidationPipe" class to the "providers" array. This makes the "ValidationPipe" class available to the entire application (globally).
     {
-      // The "APP_PIPE" constant is a special token that tells Nest to use the "ValidationPipe" class.
       provide: APP_PIPE,
-      // The "useValue" property is used to pass a value to the "ValidationPipe" class.
       useValue: new ValidationPipe({
-        // The "whitelist" property is used to remove any properties that are not defined in the DTO.
         whitelist: true,
       }),
     },
   ],
 })
 export class AppModule {
-  // Added the "configure" method to the "AppModule" class.
   configure(consumer: MiddlewareConsumer) {
-    // The "consumer" parameter is an instance of the "MiddlewareConsumer" class.
     consumer
-      // The "apply" method is used to apply middleware to the entire application (globally).
       .apply(
-        // The "cookieSession" function is used to create a middleware that will be applied to the entire application (globally).
         cookieSession({
-          // The "keys" property is used to encrypt the cookie.
           keys: ['asdf'],
         }),
       )
-      // The "forRoutes" method is used to specify the routes that the middleware will be applied to.
       .forRoutes('*');
   }
 }
