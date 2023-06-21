@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-// The 'setupApp' method from the 'setup-app.ts' file was removed.
 
 describe('Authentication System', () => {
   let app: INestApplication;
@@ -13,7 +12,6 @@ describe('Authentication System', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    // The 'setupApp' method from the 'setup-app.ts' file was removed.
     await app.init();
   });
 
