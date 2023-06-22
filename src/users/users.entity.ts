@@ -5,7 +5,11 @@ import {
   AfterInsert,
   AfterUpdate,
   AfterRemove,
+  // Added 'OneToMany' function to create a relationship between the 'Users' and 'Tasks' entities (one user can have many tasks).
+  OneToMany,
 } from 'typeorm';
+// Added 'Report' class from the 'report.entity.ts' file.
+import { Report } from '../reports/report.entity';
 
 @Entity()
 export class Users {
@@ -17,6 +21,11 @@ export class Users {
 
   @Column()
   password: string;
+
+  // Added 'OneToMany' decorator to create a relationship between the 'Users' and 'Tasks' entities (one user can have many tasks).
+  @OneToMany(() => Report, (report) => report.user)
+  // Added 'reports' property to the 'Users' entity.
+  reports: Report[];
 
   @AfterInsert()
   loginInsert() {

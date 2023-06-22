@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  // Added 'ManyToOne' function to create a relationship between the 'Reports' and 'Users' entities (many reports can have one user).
+  ManyToOne,
+} from 'typeorm';
+// Added 'Users' class from the 'users.entity.ts' file.
+import { Users } from '../users/users.entity';
 
 @Entity()
 export class Report {
@@ -8,33 +16,26 @@ export class Report {
   @Column()
   price: number;
 
-  // Add a new column to the Report entity.
   @Column()
-  // The column is called 'make' and it is a 'string'.
   make: string;
 
-  // Add a new column to the Report entity.
   @Column()
-  // The column is called 'model' and it is a 'string'.
   model: string;
 
-  // Add a new column to the Report entity.
   @Column()
-  // The column is called 'year' and it is a 'number'.
   year: number;
 
-  // Add a new column to the Report entity.
   @Column()
-  // The column is called 'lng' and it is a 'number'.
   lng: number;
 
-  // Add a new column to the Report entity.
   @Column()
-  // The column is called 'lat' and it is a 'number'.
   lat: number;
 
-  // Add a new column to the Report entity.
   @Column()
-  // The column is called 'mileage' and it is a 'number'.
   mileage: number;
+
+  // Added 'ManyToOne' decorator to create a relationship between the 'Reports' and 'Users' entities (many reports can have one user).
+  @ManyToOne(() => Users, (user) => user.reports)
+  // Added 'user' property to the 'Reports' entity.
+  user: Users;
 }
