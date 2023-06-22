@@ -6,6 +6,11 @@ export class Report {
   @PrimaryGeneratedColumn()
   id: number;
 
+  // Added '@Column()' decorator. This is used by TypeORM to create a column in the database. Provided 'default: false' to set the default value of the column to false.
+  @Column({ default: false })
+  // Added 'approved' property. This will be used to determine whether a report has been approved or not.
+  approved: boolean;
+
   @Column()
   price: number;
 
