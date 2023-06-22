@@ -1,23 +1,21 @@
-// Added the 'Post', 'Body', 'UseGuards' decorators from the '@nestjs/common' package to the 'reports' controller.
 import { Controller, Post, Body, UseGuards } from '@nestjs/common';
-// Added tje 'CreateReportDto' class from the './dto/create-report.dto' file to the 'reports' controller.
 import { CreateReportDto } from './dto/create-report.dto';
-// Added the 'ReportsService' class from the './reports.service' file to the 'reports' controller.
 import { ReportsService } from './reports.service';
-// Added the 'AuthGuard' class from the '../users/guards/auth.guard' file to the 'reports' controller.
 import { AuthGuard } from '../users/guards/auth.guard';
+// Added 'CurrentUser' decorator to get the current user.
+import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+// Added 'Users' class from the 'users.entity.ts' file.
+import { Users } from 'src/users/users.entity';
 
 @Controller('reports')
 export class ReportsController {
-  // Injected the 'ReportsService' class into the 'ReportsController' class.
   constructor(private reportsService: ReportsService) {}
 
-  // Added the 'Post' decorator to the 'createReport' method. This decorator will ensure that the 'createReport' method is called when a POST request is made to the '/reports' endpoint.
   @Post()
-  // Added the 'UseGuards' decorator to the 'createReport' method. This decorator will ensure that the 'createReport' method is called when a POST request is made to the '/reports' endpoint.
   @UseGuards(AuthGuard)
-  // Added the 'Body' decorator to the 'createReport' method. This decorator will ensure that the 'createReport' method is called when a POST request is made to the '/reports' endpoint.
-  createReport(@Body() body: CreateReportDto) {
-    return this.reportsService.create(body);
+  // Added '@CurrentUser' decorator to get the current user.
+  createReport(@Body() body: CreateReportDto, @CurrentUser() user: Users) {
+    // Pass 'user' to the 'create' function to create a report for the current user.
+    return this.reportsService.create(body, user);
   }
 }

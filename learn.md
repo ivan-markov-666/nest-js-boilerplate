@@ -2,35 +2,26 @@
 That file shows what was done at that branch. Remember, the branches are named with a number prefix. The number prefix indicates the lecture's progress. Starting from the first branch, you will be able to learn how to create a new NestJS project from scratch.  
 
 ## What was done in that lecture: 
-Added new columns in the 'src\reports\report.entity.ts' file.
-Created a new folder and file 'src\reports\dto\create-report.dto.ts'.
-'reports.service.ts' was updated.
-Added new 'src\reports\requests.http' file and test to it.
+Created a relationship (associations) between 'Users' and 'Tasks' entities (one user can have many tasks).
 
 ### Added to the project:  
-1. Added new columns in the 'src\reports\report.entity.ts' file. For more details, see the file.
-2. Create a new folder and file 'src\reports\dto\create-report.dto.ts'. For more details, see the file. Let's mention again how that DTO is working:
-- Whenever the client sends a request to the server, the server will validate the request body with the DTO. If the request body is invalid, the server will respond with the status code 400 and the error message.
-3. The 'src\reports\reports.service.ts' file was updated. 
-- Added the 'constructor' method to inject the repository into the service class.
-- Added the 'create' method to create a new report.
-For more details, see the file.
-4. Now, we need to test the code. To do that, we will create a new file, 'src\reports\requests.http'. If you want, you can also test the code with Postman or another tool. 
-- Added tests to the 'src\reports\requests.http' file. For more details, see the file.
-5. Start the server:
+1. Added 'OneToMany' decorator to create a relationship between the 'Users' and 'Tasks' entities (one user can have many tasks) in the "src\users\users.entity.ts" file. For more details see the file.
+2. Added 'ManyToOne' decorator to create a relationship between the 'Reports' and 'Users' entities (many reports can have one user) in the "src\reports\report.entity.ts" file. For more details see the file.
+3. Delete 'db.sqlite3' file from the root folder. 
+4. Start the server:
 > npm run start:dev
 
-6. To make a valid test, you need to follow the test case:  
+5. You need to create a new user. You can create a new user from test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tool.
+6. You need to login with the user. You can login with the user from test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tool.
+7. Added '@CurrentUser' decorator to get the current user in the 'src\reports\reports.controller.ts' file. For more details see the file.
+8. Added 'user' parameter to the 'create' function to create a report for the current user in the 'src\reports\reports.service.ts' file. For more details see the file.
+9. Now we can test if the association works. Just follow that test case.  
 Test Case :  
 ``` 1. Create a new user.```  
-``` - You can create a new user from the test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tools. ```  
-``` 2. Log in with the user.```  
-``` - You can log in with the user from the test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tools.```  
-``` 3. Now you can try the new test.```  
-``` - You can create a new report from the test located in the 'src\reports\request.http' file, or you can create a test using PostMan or other tools.```  
-``` - The response should be "HTTP/1.1 201 Created"```  
-``` 4. Sign out a user.```  
-``` - You can sign out from the test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tools.```  
-``` 5. Try the test again.```  
-``` - You can create a new report from the test located in the 'src\reports\request.http' file, or you can create a test using PostMan or other tools.```  
-``` - The response should be "HTTP/1.1 403 Forbidden"```  
+``` - You can create a new user from test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tool. ```  
+``` 2. Login with the user.```  
+``` - You can login with the user from test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tool.```  
+``` 3. Now add new report to the user.```  
+``` - You can create a new report from test located in the 'src\reports\request.http' file, or you can create a test using PostMan or other tool.```  
+``` - The resposnse shold be "HTTP/1.1 201 Created" and should returns a JSON containing information about the 'id' of the record and information about the 'user' like 'id', 'email' and 'password'.```  
+'password' is not needed to be included in the response. This is a problem. That problem and other issues will be fixed in the next branch.
