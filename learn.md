@@ -22,15 +22,15 @@ For more details see the file.
 
 6. To make a valid test you need to follow that test case:
 Test Case :
-``` 1. Create a new user.```
-``` - You can create a new user from test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tool. ```
-``` 2. Login with the user.```
-``` - You can login with the user from test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tool.```
-``` 3. Now you can try the new test.```
-``` - You can create a new report from test located in the 'src\reports\request.http' file, or you can create a test using PostMan or other tool.```
-``` - The resposnse shold be "HTTP/1.1 201 Created"```
-``` 4. Sign out a user. ```
-``` - You can sign out from test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tool.```
-``` 5. Try the test agai.```
-``` - You can create a new report from test located in the 'src\reports\request.http' file, or you can create a test using PostMan or other tool.```
-``` - The resposnse shold be "HTTP/1.1 403 Forbidden"```
+``` 1. Create a new user.```  
+``` - You can create a new user from test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tool. ```  
+``` 2. Login with the user.```  
+``` - You can login with the user from test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tool.```  
+``` 3. Now you can try the new test.```  
+``` - You can create a new report from test located in the 'src\reports\request.http' file, or you can create a test using PostMan or other tool.```  
+``` - The resposnse shold be "HTTP/1.1 201 Created"```  
+``` 4. Sign out a user.```  
+``` - You can sign out from test located in the 'src\users\request.http' file, or you can create a test using PostMan or other tool.```  
+``` 5. Try the test agai.```  
+``` - You can create a new report from test located in the 'src\reports\request.http' file, or you can create a test using PostMan or other tool.```  
+``` - The resposnse shold be "HTTP/1.1 403 Forbidden"```  
