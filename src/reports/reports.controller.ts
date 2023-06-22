@@ -2,10 +2,12 @@ import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { CreateReportDto } from './dto/create-report.dto';
 import { ReportsService } from './reports.service';
 import { AuthGuard } from '../users/guards/auth.guard';
-// Added 'CurrentUser' decorator to get the current user.
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';
-// Added 'Users' class from the 'users.entity.ts' file.
 import { Users } from 'src/users/users.entity';
+// Import the 'ReportDto' class from 'src\reports\dto\report.dto.ts'
+import { ReportDto } from './dto/report.dto';
+// Import the 'Serialize' decorator from 'src\interceptors\serialize.interceptor.ts'
+import { Serialize } from '../interceptors/serialize.interceptor';
 
 @Controller('reports')
 export class ReportsController {
@@ -13,9 +15,9 @@ export class ReportsController {
 
   @Post()
   @UseGuards(AuthGuard)
-  // Added '@CurrentUser' decorator to get the current user.
+  // Add the 'Serialize' decorator to the 'createReport' method and pass in the 'ReportDto' class as an argument.
+  @Serialize(ReportDto)
   createReport(@Body() body: CreateReportDto, @CurrentUser() user: Users) {
-    // Pass 'user' to the 'create' function to create a report for the current user.
     return this.reportsService.create(body, user);
   }
 }

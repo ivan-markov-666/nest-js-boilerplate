@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  // Added 'ManyToOne' function to create a relationship between the 'Reports' and 'Users' entities (many reports can have one user).
-  ManyToOne,
-} from 'typeorm';
-// Added 'Users' class from the 'users.entity.ts' file.
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Users } from '../users/users.entity';
 
 @Entity()
@@ -34,8 +27,6 @@ export class Report {
   @Column()
   mileage: number;
 
-  // Added 'ManyToOne' decorator to create a relationship between the 'Reports' and 'Users' entities (many reports can have one user).
   @ManyToOne(() => Users, (user) => user.reports)
-  // Added 'user' property to the 'Reports' entity.
   user: Users;
 }
