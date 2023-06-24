@@ -17,9 +17,7 @@ export class ReportDto {
   make: string;
   @Expose()
   model: string;
-  // Added '@Expose()' decorator. This is used to expose the 'approved' property.
   @Expose()
-  // Added 'approved' property. This will be used to determine whether a report has been approved or not.
   approved: boolean;
 
   @Transform(({ obj }) => obj.user.id)

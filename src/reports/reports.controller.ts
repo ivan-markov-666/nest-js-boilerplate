@@ -3,20 +3,19 @@ import {
   Post,
   Body,
   UseGuards,
-  // Added 'Patch' decorator. This is used to create a PATCH endpoint.
   Patch,
-  // Added 'Param' decorator. This is used to get the 'id' parameter from the request.
   Param,
 } from '@nestjs/common';
 import { CreateReportDto } from './dto/create-report.dto';
 import { ReportsService } from './reports.service';
-import { AuthGuard } from '../users/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 import { Users } from 'src/users/users.entity';
 import { ReportDto } from './dto/report.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
-// Added 'ApproveReportDto' class. This will be used to validate the 'approved' property.
 import { ApproveReportDto } from './dto/approve-report.dto';
+// Import the 'AdminGuard' guard. We will use this guard to protect the '/reports/:id' route.
+import { AdminGuard } from 'src/guards/admin.guard';
 
 @Controller('reports')
 export class ReportsController {
@@ -26,14 +25,17 @@ export class ReportsController {
   @UseGuards(AuthGuard)
   @Serialize(ReportDto)
   createReport(@Body() body: CreateReportDto, @CurrentUser() user: Users) {
+    console.log('createReport method activated');
+    console.log('Received data:', body);
     return this.reportsService.create(body, user);
   }
 
-  // Added new PATCH endpoint. This will be used to approve a report.
   @Patch('/:id')
-  // Added 'approveReport' method. This will be used to approve a report, by providing the 'id' of the report and the 'approved' property.
+  // Use the 'AdminGuard' guard to protect the '/reports/:id' route. This route will be used to approve a report. Only an admin should be able to approve a report.
+  @UseGuards(AdminGuard)
   approvedReport(@Param('id') id: string, @Body() body: ApproveReportDto) {
-    // Returning the 'changeApproval' method from the 'reportsService'. This will be used to approve a report, by providing the 'id' of the report and the 'approved' property.
+    console.log('approvedReport method activated');
+    console.log('Received data:', body);
     return this.reportsService.changeApproval(id, body.approved);
   }
 }
