@@ -19,3 +19,6 @@ content-type: application/json
 {
     "approved": true
 }
+
+### Get an estimate for and existing vehicle
+GET http://localhost:3000/reports?make=Toyota&model=Camry&year=2012&lng=0&lat=0&mileage=100000
