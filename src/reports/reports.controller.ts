@@ -28,8 +28,9 @@ export class ReportsController {
 
   // Add the 'Get' decorator to the 'getEstimate' method.
   @Get()
-  // !!!!
+  // Add 'getEstimate' method. This method will be used to get an estimate of a car.
   getEstimate(@Query() query: GetEstimateDto) {
+    // Print the query to the console.
     console.log(query);
   }
 
