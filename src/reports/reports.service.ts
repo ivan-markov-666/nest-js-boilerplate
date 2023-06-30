@@ -4,43 +4,26 @@ import { Repository } from 'typeorm';
 import { Report } from './report.entity';
 import { CreateReportDto } from './dto/create-report.dto';
 import { Users } from '../users/users.entity';
-// Import 'GetEstimateDto' class from './dto/get-estimate.dto.ts'.
 import { GetEstimateDto } from './dto/get-estimate.dto';
 
 @Injectable()
 export class ReportsService {
   constructor(@InjectRepository(Report) private repo: Repository<Report>) {}
 
-  // Added 'createEstimate' method. This method will be used to calculate the average price of a car.
   createEstimate({ make, model, lng, lat, year, mileage }: GetEstimateDto) {
-    // Return the average price of a car.
-    return (
-      this.repo
-        // Use 'createQueryBuilder' method to create a query.
-        .createQueryBuilder()
-        // Select the average price of a car.
-        .select('AVG(price)', 'price')
-        // Filter the query by the make, model, lng, lat, year, and mileage.
-        .where('make = :make', { make })
-        // Filter the query by the model.
-        .andWhere('model = :model', { model })
-        // Filter the query by the lng.
-        .andWhere('lng- :lng BETWEEN -5 AND 5', { lng })
-        // Filter the query by the lat.
-        .andWhere('lat- :lat BETWEEN -5 AND 5', { lat })
-        // Filter the query by the year.
-        .andWhere('year- :year BETWEEN -5 AND 5', { year })
-        // Approved reports only.
-        .andWhere('approved IS TRUE')
-        // Filter the query by the mileage.
-        .orderBy('ABS(mileage - :mileage)', 'DESC')
-        // Set the parameters.
-        .setParameters({ mileage })
-        // Limit the query to 3 results.
-        .limit(3)
-        // Execute the query.
-        .getRawOne()
-    );
+    return this.repo
+      .createQueryBuilder()
+      .select('AVG(price)', 'price')
+      .where('make = :make', { make })
+      .andWhere('model = :model', { model })
+      .andWhere('lng- :lng BETWEEN -5 AND 5', { lng })
+      .andWhere('lat- :lat BETWEEN -5 AND 5', { lat })
+      .andWhere('year- :year BETWEEN -5 AND 5', { year })
+      .andWhere('approved IS TRUE')
+      .orderBy('ABS(mileage - :mileage)', 'DESC')
+      .setParameters({ mileage })
+      .limit(3)
+      .getRawOne();
   }
 
   create(reportDtop: CreateReportDto, user: Users) {

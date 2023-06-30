@@ -2,25 +2,10 @@
 That file shows what was done at that branch. Remember, the branches are named with a number prefix. The number prefix indicates the lecture's progress. Starting from the first branch, you will be able to learn how to create a new NestJS project from scratch.  
 
 ## What was done in that lecture:  
-Added approved report for getting an estimate for an existing vehicle.
+Changed the 'cookieSession' string. Added mechanism for getting a value for the 'cookieSession' string from '.env' files.
 
 ### Added to the project:  
-1. Added new 'createEstimate' method to the 'src\reports\reports.service.ts' file. The method will be used to create a new report for getting an estimate for an existing vehicle. For more details see the file.  
-2. Add the 'createEstimate' method inside the 'getEstimate' endpoint located in the 'src\reports\reports.controller.ts' file. For more details see the file.  
-4. Start the server:  
-> npm run start:dev
-
-5. Now we can test if the report works. Just execute 'Create a report and assing it to a user.', 'Approve the existing report', 'Get an estimate for and existing vehicle' and 'Test not approved report'.  
-The response from 'Get an estimate for and existing vehicle' should be the price of the car:  
-```
-{
-  "price": 50000
-}
-```
-
-The reponse from 'Test not approved report' should be:  
-```
-{
-  "price": null
-}
-```
+We need to change the 'cookieSession' 'keys' from the 'src\app.module.ts' file. We can use .env files to store the keys.  
+1. Add new 'COOKIE_KEY' property to the '.env.test' and '.env.development' files. Add different values for each file.  
+2. Call the newly added 'COOKIE_KEY' property in the 'cookieSession' from 'src\app.module.ts' file. For more details see the file.
+3. To verify that the 'cookieSession' works, just check the server console. The server should be running.
