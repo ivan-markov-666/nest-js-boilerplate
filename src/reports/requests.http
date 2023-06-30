@@ -22,3 +22,6 @@ content-type: application/json
 
 ### Get an estimate for and existing vehicle
 GET http://localhost:3000/reports?make=Toyota&model=Camry&year=2012&lng=0&lat=0&mileage=100000
+
+### Test not approved report
+GET http://localhost:3000/reports?make=Honda&model=Camry&year=2012&lng=0&lat=0&mileage=100000
