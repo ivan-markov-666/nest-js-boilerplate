@@ -43,11 +43,16 @@ const cookieSession = require('cookie-session');
   ],
 })
 export class AppModule {
+  // Add constructor to inject ConfigService into AppModule class and use it to call the 'COOKIE_KEY' propery from .env files.
+  constructor(private configService: ConfigService) {}
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
         cookieSession({
-          keys: ['asdf'],
+          keys: [
+            // Add 'COOKIE_KEY' from .env files to be used as a key for cookie-session middleware. This key will be used to encrypt the cookie.
+            this.configService.get('COOKIE_KEY'),
+          ],
         }),
       )
       .forRoutes('*');
