@@ -5,11 +5,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
-import { Users } from './users/users.entity';
-import { Report } from './reports/report.entity';
+// Remove the 'Users' from './users/users.entity' and remove the 'Report' from './reports/report.entity', because we are not using them now.
 import { ConfigModule, ConfigService } from '@nestjs/config';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cookieSession = require('cookie-session');
+// Import the "ormconfig.js" file and use it in the "TypeOrmModule.forRoot" method.
+import * as config from '../ormconfig.js';
 
 @Module({
   imports: [
@@ -17,17 +18,8 @@ const cookieSession = require('cookie-session');
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => {
-        return {
-          type: 'sqlite',
-          database: config.get<string>('DB_NAME'),
-          entities: [Users, Report],
-          synchronize: true,
-        };
-      },
-    }),
+    // Replace the "TypeOrmModule.forRootAsync" method with "TypeOrmModule.forRoot" method to use the database connection from .env files.
+    TypeOrmModule.forRoot(config),
     UsersModule,
     ReportsModule,
   ],
@@ -43,16 +35,12 @@ const cookieSession = require('cookie-session');
   ],
 })
 export class AppModule {
-  // Add constructor to inject ConfigService into AppModule class and use it to call the 'COOKIE_KEY' propery from .env files.
   constructor(private configService: ConfigService) {}
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(
         cookieSession({
-          keys: [
-            // Add 'COOKIE_KEY' from .env files to be used as a key for cookie-session middleware. This key will be used to encrypt the cookie.
-            this.configService.get('COOKIE_KEY'),
-          ],
+          keys: [this.configService.get('COOKIE_KEY')],
         }),
       )
       .forRoutes('*');
