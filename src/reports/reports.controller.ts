@@ -9,13 +9,13 @@ import {
 import { CreateReportDto } from './dto/create-report.dto';
 import { ReportsService } from './reports.service';
 import { AuthGuard } from '../guards/auth.guard';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
-import { Users } from 'src/users/users.entity';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
+import { Users } from '../users/users.entity';
 import { ReportDto } from './dto/report.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
 import { ApproveReportDto } from './dto/approve-report.dto';
 // Import the 'AdminGuard' guard. We will use this guard to protect the '/reports/:id' route.
-import { AdminGuard } from 'src/guards/admin.guard';
+import { AdminGuard } from '../guards/admin.guard';
 
 @Controller('reports')
 export class ReportsController {
