@@ -3,9 +3,9 @@ import { CreateReportDto } from './dto/create-report.dto';
 import { ReportsService } from './reports.service';
 import { AuthGuard } from '../users/guards/auth.guard';
 // Added 'CurrentUser' decorator to get the current user.
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
 // Added 'Users' class from the 'users.entity.ts' file.
-import { Users } from 'src/users/users.entity';
+import { Users } from '../users/users.entity';
 
 @Controller('reports')
 export class ReportsController {
