@@ -1,5 +1,12 @@
 var dbConfig = {
   synchronize: false,
+  // Added 'migration' to enable migrations from the CLI.
+  migrations: ['migrations/*.js'],
+  // Added 'cli' to make sure migrations are generated in the correct folder.
+  cli: {
+    // Location of migration files.
+    migrationsDir: 'migrations',
+  },
 };
 
 switch (process.env.NODE_ENV) {
