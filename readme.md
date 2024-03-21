@@ -8,5 +8,6 @@ This repository can be used for learning how to create a boilerplate for BE deve
 1. Clone the project from that repository.
 2. Open your favorite terminal and navigate to the project's root folder.
 3. Install the dependencies:
-> npm i  
+> npm i
+
 For using the project, please review the package.json file to see the terminal commands.
